@@ -48,7 +48,7 @@ script {
 //push image to dockerhub
    stage('Push image') {
             docker.withRegistry('https://registry.hub.docker.com',  '605b0519-9017-47ec-8e78-6d95c5957e0a') {
-            sh "docker push dariniv/${proversion}"
+            sh " docker push dariniv/${proversion} "
    }
   }
  }
