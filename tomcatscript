@@ -1,0 +1,17 @@
+#!/bin/bash
+port=$arg1
+STAT=`netstat -na | grep $port | awk '{print $7}'`
+if [ "$STAT" = "LISTEN" ]; then
+    echo "DEFAULT TOMCAT PORT IS LISTENING, SO ITS OK"
+elif [ "$STAT" = "" ]; then 
+    echo "$port PORT IS NOT IN USE SO TOMCAT IS NOT WORKING"
+    ## only if you defined CATALINA_HOME in JAVA ENV ##
+    cd $CATALINA_HOME/bin
+    ./startup.sh
+fi
+RESULT=`netstat -na | grep $port | awk '{print $7}' | wc -l`
+if [ "$RESULT" = 0 ]; then
+    echo "TOMCAT PORT STILL NOT LISTENING"
+elif [ "$RESULT" != 0 ]; then
+    echo "TOMCAT PORT IS LISTENINS AND SO TOMCAT WORKING"
+fi
